@@ -1,4 +1,4 @@
-import AppError from "@Class/error.js";
+import AppError from "../classes/error.js";
 const parseValueType = (value) => {
     var _a;
     switch (typeof value) {

@@ -1,4 +1,4 @@
-import getEnv from '@/lib/getEnv.js';
+import getEnv from '../../../lib/getEnv.js';
 export default class WorkerBase {
     static get isTest() {
         return getEnv('NODE_ENV', process.env.NODE_ENV) === 'test';

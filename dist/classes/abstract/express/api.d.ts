@@ -2,9 +2,9 @@
 import { Express, Router, RequestHandler } from "express";
 import * as http from "http";
 import cors from "cors";
-import { MiddlewareFunction } from "@/types/express/middleware.js";
-import AppError from "@Class/error.js";
-import { Log } from "@/lib/logger.js";
+import { MiddlewareFunction } from "../../../types/express/middleware.js";
+import AppError from "../../error.js";
+import { Log } from "../../../lib/logger.js";
 export type ApiHandler = "notFound" | "error";
 export type ApiDefaultEndpoints = "health" | "ping";
 export type ApiHandlersRecord = Partial<Record<ApiHandler, MiddlewareFunction>>;

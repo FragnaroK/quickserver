@@ -10,12 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import AppError from "@Class/error.js";
-import createLogger from "@/lib/logger.js";
+import AppError from "../../error.js";
+import createLogger from "../../../lib/logger.js";
 import HttpStatus from "http-status-values";
 import { pinoHttp } from "pino-http";
-import health from "@/routes/health.route.js";
-import ping from "@/routes/ping.route.js";
+import health from "../../../routes/health.route.js";
+import ping from "../../../routes/ping.route.js";
 const apiHandlers = ["notFound", "error"];
 export default class Api {
     constructor(app, routes, middlewares = [], handlers = {}, config, logger) {

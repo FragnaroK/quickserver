@@ -1,4 +1,4 @@
-import { isLog } from "@/lib/logger.js";
+import { isLog } from "../lib/logger.js";
 import HttpStatus from "http-status-values";
 export default class AppError extends Error {
     constructor(code = "APP_ERROR", status = "INTERNAL_SERVER_ERROR", message = "Something went wrong", options = {}) {

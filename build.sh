@@ -11,6 +11,7 @@ function handle_dist() {
 
 
 handle_dist && \
-tsc
+tsc && \
+pnpx tsc-alias
 # sleep 2 && \
 # pnpm build:types

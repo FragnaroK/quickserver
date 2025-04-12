@@ -1,8 +1,8 @@
 import { Worker } from "worker_threads";
-import AppError from "@Class/error.js";
+import AppError from "../../error.js";
 import path from "path";
 import { rootPath } from "get-root-path";
-import WorkerBase from "@Class/abstract/workers/base.js";
+import WorkerBase from "../../abstract/workers/base.js";
 export default class WorkerService extends WorkerBase {
     static createRunner(workerName) {
         return {
