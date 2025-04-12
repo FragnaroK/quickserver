@@ -115,7 +115,6 @@ export default abstract class Api {
 	private setMiddlewares() {
 		for (const middleware of this.middlewares) {
 			this.logger.debug(`Registering middleware: ${middleware.name ?? "unknown"}`);
-			this.logger.debug(JSON.stringify(middleware, null, 2));
 			this.app.use(middleware);
 		}
 

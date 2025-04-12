@@ -5,7 +5,7 @@ import { IStatusCode } from "@Type/common.js";
 import AppError, { ExtendedErrorOptions, IErrorCode } from "@/classes/error.js";
 
 export default function responseHelpers(logger?: Log): MiddlewareFunction {
-	return (req, resp, next) => {
+	const extendedResponse: MiddlewareFunction = (req, resp, next) => {
 		// Overloaded functions
 
 		function response_ok<Data = {}>(
@@ -86,4 +86,6 @@ export default function responseHelpers(logger?: Log): MiddlewareFunction {
 
 		next();
 	};
+
+	return extendedResponse;
 }

@@ -38,12 +38,8 @@ export default class QuickServer extends Class.Base.Api {
 	) {
 		super(
 			app,
-			{
-				...routes,
-				health: health(),
-				ping: ping(),
-			},
-			[...middlewares, responseHelpers()],
+			routes,
+			[responseHelpers(), ...middlewares],
 			handlers,
 			config,
 		);

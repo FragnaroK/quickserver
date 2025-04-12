@@ -1,7 +1,7 @@
 import HttpStatus from "http-status-values";
 import AppError from "../classes/error.js";
 export default function responseHelpers(logger) {
-    return (req, resp, next) => {
+    const extendedResponse = (req, resp, next) => {
         function response_ok(dataOrStatus, messageOrData, statusOrMessage) {
             if (typeof dataOrStatus === "string" &&
                 HttpStatus.getStatusCode(dataOrStatus)) {
@@ -48,4 +48,5 @@ export default function responseHelpers(logger) {
         logger === null || logger === void 0 ? void 0 : logger.debug("(Middleware) responseHelpers: Response object extended", resp.ok, resp.error);
         next();
     };
+    return extendedResponse;
 }

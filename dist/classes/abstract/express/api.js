@@ -54,7 +54,6 @@ export default class Api {
         var _a;
         for (const middleware of this.middlewares) {
             this.logger.debug(`Registering middleware: ${(_a = middleware.name) !== null && _a !== void 0 ? _a : "unknown"}`);
-            this.logger.debug(JSON.stringify(middleware, null, 2));
             this.app.use(middleware);
         }
         this.logger.debug(`Registered middlewares: ${this.middlewares.map((m) => { var _a; return (_a = m.name) !== null && _a !== void 0 ? _a : "unknown"; }).join(", ")}`);
