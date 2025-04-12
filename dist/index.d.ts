@@ -3,8 +3,12 @@ import Class from "./classes/index.js";
 import express, { Router } from "express";
 import { MiddlewareFunction } from "./types/express/middleware.js";
 import AppError from "./classes/error.js";
-type QuickServeEvents = "server_started" | "server_stopped" | "server_error";
-export default class QuickServe extends Class.Base.Api {
+export type QuickServerEvents = "server_started" | "server_stopped" | "server_error";
+export * from './classes/index.js';
+export * from './lib/index.js';
+export * from './db/index.js';
+export * from './types/index.js';
+export default class QuickServer extends Class.Base.Api {
     readonly state: {
         started: boolean;
         stopped: boolean;
@@ -14,7 +18,6 @@ export default class QuickServe extends Class.Base.Api {
     onStart(): void;
     onStop(): void;
     onError(error: AppError): void;
-    on(event: QuickServeEvents, callback: (...args: any[]) => void): void;
-    emit(event: QuickServeEvents, ...args: any[]): void;
+    on(event: QuickServerEvents, callback: (...args: any[]) => void): void;
+    emit(event: QuickServerEvents, ...args: any[]): void;
 }
-export {};
