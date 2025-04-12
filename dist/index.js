@@ -3,10 +3,13 @@ import express from "express";
 import responseHelpers from "./middlewares/response.js";
 import health from "./routes/health.route.js";
 import ping from "./routes/ping.route.js";
+import Utils from './lib/index.js';
+import Database from './db/index.js';
 export * from './classes/index.js';
 export * from './lib/index.js';
 export * from './db/index.js';
 export * from './types/index.js';
+export { Class, Utils, Database };
 export default class QuickServer extends Class.Base.Api {
     constructor(routes, middlewares = [], handlers = {}, config, app = express()) {
         super(app, Object.assign(Object.assign({}, routes), { health: health(), ping: ping() }), [...middlewares, responseHelpers()], handlers, config);
