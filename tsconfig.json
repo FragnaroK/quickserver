@@ -1,0 +1,50 @@
+{
+	"compilerOptions": {
+		"experimentalDecorators": true,
+
+		"target": "ES2016",
+
+		"module": "NodeNext",
+		"moduleResolution": "nodenext",
+
+		"esModuleInterop": true,
+		"declaration": true,
+		"declarationMap": false,
+		"sourceMap": false,
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"declarationDir": "./dist",
+		"removeComments": true,
+
+		"forceConsistentCasingInFileNames": true,
+
+		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		"noImplicitReturns": true,
+		"types": ["node"],
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"paths": {
+			"@/*": ["./src/*"],
+			"@Classes": ["./src/classes/index.ts"],
+			"@Types": ["./src/types/index.ts"],
+			"@Constants": ["./src/constants/index.ts"],
+			"@Databases": ["./src/db/index.ts"],
+
+			"@Database/*": ["./src/db/*"],
+			"@Class/*": ["./src/classes/*"],
+			"@Type/*": ["./src/types/*"],
+			"@Lib/*": ["./src/lib/*"],
+			"@Constants/*": ["./src/constants/*"],
+			"@Util/*": ["./src/lib/utils/*"]
+		}
+	},
+	"include": ["./src/**/*.ts", "./src/**/*.js", "./types/**/*.d.ts"],
+	"exclude": ["node_modules", "**/*.spec.ts"]
+}
