@@ -30,7 +30,7 @@ export type ApiEnvironment = {
 	PORT: number;
 } & { [key: string]: any };
 
-export type ApiConfig = {
+export type ApiOptions = {
 	basePath?: string;
 	corsOptions?: cors.CorsOptions;
 	bodyParserLimit?: string;
@@ -61,7 +61,7 @@ export default abstract class Api {
 		protected readonly routes: Record<string, Router>,
 		protected readonly middlewares: RequestHandler[] = [],
 		protected readonly handlers: ApiHandlersRecord = {},
-		protected readonly config?: ApiConfig,
+		protected readonly config?: ApiOptions,
 		logger?: Log,
 	) {
 		this.logger = logger ?? createLogger("internal", "I-API", config?.DEBUG);

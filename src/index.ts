@@ -1,26 +1,32 @@
-import { ApiConfig, ApiHandlersRecord } from "./classes/abstract/express/api.js";
+import { ApiHandlersRecord, ApiOptions } from "./classes/abstract/express/api.js";
 import Class from "./classes/index.js";
-import express, { Router } from "express";
+import express, { Router as QuickServerRouter } from "express";
 import { MiddlewareFunction } from "./types/express/middleware.js";
 import AppError from "./classes/error.js";
 import responseHelpers from "./middlewares/response.js";
-import health from "./routes/health.route.js";
-import ping from "./routes/ping.route.js";
-import Utils from './lib/index.js';
-import Database from './db/index.js';
+import Utils from "./lib/index.js";
+import Database from "./db/index.js";
 
+export type QuickServerRoutes = Record<string, QuickServerRouter>;
+export type QuickServerApp = express.Express;
 export type QuickServerEvents = "server_started" | "server_stopped" | "server_error";
+export type QuickServerRequest = express.Request;
+export type QuickServerResponse = express.Response;
+export type QuickServerNext = express.NextFunction;
+export type QuickServerConfig = {
+	routes: QuickServerRoutes;
+	middlewares?: MiddlewareFunction[];
+	handlers?: ApiHandlersRecord;
+	options?: ApiOptions;
+	app: QuickServerApp;
+};
 
-export * from './classes/index.js';
-export * from './lib/index.js';
-export * from './db/index.js';
-export * from './types/index.js';
+export * from "./classes/index.js";
+export * from "./lib/index.js";
+export * from "./db/index.js";
+export * from "./types/index.js";
 
-export {
-    Class,
-    Utils,
-    Database
-}
+export { Class, Utils, Database, QuickServerRouter };
 
 export default class QuickServer extends Class.Base.Api {
 	public readonly state = {
@@ -29,20 +35,9 @@ export default class QuickServer extends Class.Base.Api {
 		error: false,
 	};
 
-	constructor(
-		routes: Record<string, Router>,
-		middlewares: MiddlewareFunction[] = [],
-		handlers: ApiHandlersRecord = {},
-		config?: ApiConfig,
-		app: express.Express = express(),
-	) {
-		super(
-			app,
-			routes,
-			[responseHelpers(), ...middlewares],
-			handlers,
-			config,
-		);
+	constructor(config: QuickServerConfig) {
+		const { app, routes, middlewares = [], handlers, options } = config;
+		super(app, routes, [responseHelpers(), ...middlewares], handlers, options);
 	}
 
 	onStart(): void {

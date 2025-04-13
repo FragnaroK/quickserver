@@ -14,7 +14,7 @@ export type ApiEnvironment = {
 } & {
     [key: string]: any;
 };
-export type ApiConfig = {
+export type ApiOptions = {
     basePath?: string;
     corsOptions?: cors.CorsOptions;
     bodyParserLimit?: string;
@@ -27,13 +27,13 @@ export default abstract class Api {
     protected readonly routes: Record<string, Router>;
     protected readonly middlewares: RequestHandler[];
     protected readonly handlers: ApiHandlersRecord;
-    protected readonly config?: ApiConfig | undefined;
+    protected readonly config?: ApiOptions | undefined;
     private readonly registeredHandlers;
     protected readonly logger: Log;
     protected server: http.Server | undefined;
     protected basePath: string;
     protected env: ApiEnvironment;
-    constructor(app: Express, routes: Record<string, Router>, middlewares?: RequestHandler[], handlers?: ApiHandlersRecord, config?: ApiConfig | undefined, logger?: Log);
+    constructor(app: Express, routes: Record<string, Router>, middlewares?: RequestHandler[], handlers?: ApiHandlersRecord, config?: ApiOptions | undefined, logger?: Log);
     private applyDefaultMiddlewares;
     private setMiddlewares;
     private setRoutes;

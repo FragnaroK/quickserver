@@ -1,16 +1,17 @@
 import Class from "./classes/index.js";
-import express from "express";
+import { Router as QuickServerRouter } from "express";
 import responseHelpers from "./middlewares/response.js";
-import Utils from './lib/index.js';
-import Database from './db/index.js';
-export * from './classes/index.js';
-export * from './lib/index.js';
-export * from './db/index.js';
-export * from './types/index.js';
-export { Class, Utils, Database };
+import Utils from "./lib/index.js";
+import Database from "./db/index.js";
+export * from "./classes/index.js";
+export * from "./lib/index.js";
+export * from "./db/index.js";
+export * from "./types/index.js";
+export { Class, Utils, Database, QuickServerRouter };
 export default class QuickServer extends Class.Base.Api {
-    constructor(routes, middlewares = [], handlers = {}, config, app = express()) {
-        super(app, routes, [responseHelpers(), ...middlewares], handlers, config);
+    constructor(config) {
+        const { app, routes, middlewares = [], handlers, options } = config;
+        super(app, routes, [responseHelpers(), ...middlewares], handlers, options);
         this.state = {
             started: false,
             stopped: false,
