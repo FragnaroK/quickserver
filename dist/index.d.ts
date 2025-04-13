@@ -16,7 +16,7 @@ export type QuickServerConfig = {
     middlewares?: MiddlewareFunction[];
     handlers?: ApiHandlersRecord;
     options?: ApiOptions;
-    app: QuickServerApp;
+    app?: QuickServerApp;
 };
 export * from "./classes/index.js";
 export * from "./lib/index.js";

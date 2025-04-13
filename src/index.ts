@@ -18,7 +18,7 @@ export type QuickServerConfig = {
 	middlewares?: MiddlewareFunction[];
 	handlers?: ApiHandlersRecord;
 	options?: ApiOptions;
-	app: QuickServerApp;
+	app?: QuickServerApp;
 };
 
 export * from "./classes/index.js";
@@ -36,7 +36,7 @@ export default class QuickServer extends Class.Base.Api {
 	};
 
 	constructor(config: QuickServerConfig) {
-		const { app, routes, middlewares = [], handlers, options } = config;
+		const { app = express(), routes, middlewares = [], handlers, options } = config;
 		super(app, routes, [responseHelpers(), ...middlewares], handlers, options);
 	}
 

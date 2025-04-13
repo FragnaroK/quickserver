@@ -1,5 +1,5 @@
 import Class from "./classes/index.js";
-import { Router as QuickServerRouter } from "express";
+import express, { Router as QuickServerRouter } from "express";
 import responseHelpers from "./middlewares/response.js";
 import Utils from "./lib/index.js";
 import Database from "./db/index.js";
@@ -10,7 +10,7 @@ export * from "./types/index.js";
 export { Class, Utils, Database, QuickServerRouter };
 export default class QuickServer extends Class.Base.Api {
     constructor(config) {
-        const { app, routes, middlewares = [], handlers, options } = config;
+        const { app = express(), routes, middlewares = [], handlers, options } = config;
         super(app, routes, [responseHelpers(), ...middlewares], handlers, options);
         this.state = {
             started: false,
