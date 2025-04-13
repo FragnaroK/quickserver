@@ -13,29 +13,30 @@ export default function responseHelpers(logger?: Log): MiddlewareFunction {
 			messageOrData?: string | Data,
 			statusOrMessage?: IStatusCode | string,
 		) {
-			// Determine which overload is being used
-			if (
-				typeof dataOrStatus === "string" &&
-				HttpStatus.getStatusCode(dataOrStatus)
-			) {
-				// Second overload: (status, data, message)
-				const status = dataOrStatus as IStatusCode;
-				const data = messageOrData as Data;
-				const message = statusOrMessage;
+			let status: IStatusCode;
+			let message: string;
+			let data: Data;
+			let code: number;
 
-				if (message) logger?.i(data, message);
-				const code = HttpStatus.getStatusCode(status);
-				return resp.status(code ?? HttpStatus.OK).json(data ?? {});
+			// Determine which overload is being used
+			if (typeof dataOrStatus === "string" && HttpStatus.getStatusCode(dataOrStatus)) {
+				// Second overload: (status, data, message)
+				status = dataOrStatus as IStatusCode;
+				data = messageOrData as Data;
+				message = statusOrMessage ?? "Success";
+
+				code = status ? HttpStatus.getStatusCode(status) ?? HttpStatus.OK : HttpStatus.OK;
 			} else {
 				// First overload: (data, message, status)
-				const data = dataOrStatus as Data;
-				const message = messageOrData as string | undefined;
-				const status = statusOrMessage as IStatusCode | undefined;
+				data = dataOrStatus as Data;
+				message = (messageOrData ?? "Success") as string;
+				status = statusOrMessage as IStatusCode;
 
-				if (message) logger?.i(data, message);
-				const code = status ? HttpStatus.getStatusCode(status) : HttpStatus.OK;
-				return resp.status(code ?? HttpStatus.OK).json(data ?? {});
+				code = status ? HttpStatus.getStatusCode(status) ?? HttpStatus.OK : HttpStatus.OK;
 			}
+
+			if (message) logger?.i(data, message);
+			return resp.status(code ?? HttpStatus.OK).json(data ?? {});
 		}
 
 		function response_error(
@@ -44,33 +45,29 @@ export default function responseHelpers(logger?: Log): MiddlewareFunction {
 			message?: string,
 			options?: Partial<ExtendedErrorOptions>,
 		) {
+			let status: number;
+			let error: AppError;
+
 			if (AppError.isError(errorOrStatus)) {
-				const status =
-					HttpStatus.getStatusCode(errorOrStatus.status) ??
-					HttpStatus.INTERNAL_SERVER_ERROR;
-				logger?.e(errorOrStatus, errorOrStatus.message);
-				return resp.status(status).json({
-					code: errorOrStatus.code,
-					message: errorOrStatus.message,
-				});
+				error = errorOrStatus;
+				status = HttpStatus.getStatusCode(errorOrStatus.status) ?? HttpStatus.INTERNAL_SERVER_ERROR;
 			} else {
-				const error = new AppError(
+				error = new AppError(
 					code ?? "API_ERROR",
 					errorOrStatus as IStatusCode,
 					message ?? "An error occurred",
 					options,
 				);
 
-				const status =
-					HttpStatus.getStatusCode(error.status) ??
-					HttpStatus.INTERNAL_SERVER_ERROR;
-
-				logger?.e(error, error.message);
-				return resp.status(status).json({
-					code: error.code,
-					message: error.message,
-				});
+				status = HttpStatus.getStatusCode(error.status) ?? HttpStatus.INTERNAL_SERVER_ERROR;
 			}
+
+			logger?.e(error, error.message);
+
+			return resp.status(status).json({
+				code: error.code,
+				message: error.message,
+			});
 		}
 
 		// Extend response object
@@ -78,11 +75,7 @@ export default function responseHelpers(logger?: Log): MiddlewareFunction {
 		resp.error = response_error;
 		resp.ok = response_ok;
 
-		logger?.debug(
-			"(Middleware) responseHelpers: Response object extended",
-			resp.ok,
-			resp.error,
-		);
+		logger?.debug("(Middleware) responseHelpers: Response object extended", resp.ok, resp.error);
 
 		next();
 	};
