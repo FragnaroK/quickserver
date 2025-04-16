@@ -14,6 +14,9 @@ importers:
       '@types/express':
         specifier: ^5.0.1
         version: 5.0.1
+      env-util:
+        specifier: github:FragnaroK/env#main
+        version: git+https://git@github.com:FragnaroK/env.git#3d2b373711e7f5e1fd6616bc485a7fab80cfd166
       get-root-path:
         specifier: ^3.0.1
         version: 3.0.1(lodash@4.17.21)
@@ -44,6 +47,9 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
     devDependencies:
       '@types/lodash':
         specifier: ^4.17.16
@@ -272,6 +278,10 @@ packages:
   engine.io@6.6.4:
     resolution: {integrity: sha512-ZCkIjSYNDyGn0R6ewHDtXgns/Zre/NT6Agvq1/WobF7JXgFff4SeDroKiCO3fNJreU9YG429Sc81o4w5ok/W5g==}
     engines: {node: '>=10.2.0'}
+
+  env-util@git+https://git@github.com:FragnaroK/env.git#3d2b373711e7f5e1fd6616bc485a7fab80cfd166:
+    resolution: {commit: 3d2b373711e7f5e1fd6616bc485a7fab80cfd166, repo: git@github.com:FragnaroK/env.git, type: git}
+    version: 1.0.0
 
   es-abstract@1.23.9:
     resolution: {integrity: sha512-py07lI0wjxAC/DcfK1S6G7iANonniZwTISvdPzk9hzeH0IZIshbuuFxLIU96OyF89Yb9hiqWn8M/bY83KY5vzA==}
@@ -518,6 +528,9 @@ packages:
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
     engines: {node: '>=10'}
+
+  just-clone@6.2.0:
+    resolution: {integrity: sha512-1IynUYEc/HAwxhi3WDpIpxJbZpMCvvrrmZVqvj9EhpvbH8lls7HhdhiByjL7DkAaWlLIzpC0Xc/VPvy/UxLNjA==}
 
   kareem@2.6.3:
     resolution: {integrity: sha512-C3iHfuGUXK2u8/ipq9LfjFfXFxAZMQJJq7vLS45r3D9Y2xQ/m4S8zaR4zMLFWh9AsNPXmcFfUDhTEO8UIC/V6Q==}
@@ -911,6 +924,16 @@ packages:
       utf-8-validate:
         optional: true
 
+  zod-empty@1.4.1:
+    resolution: {integrity: sha512-Ji3JwJq4BalpCoumQBYPhmex4Xtqu8IUDy9t3+Z6iCC3P19xZkBOBNGfZX2OYXBoWWk5hJ340r4AQSjDTvuqvQ==}
+    engines: {node: '>=20.10.0', npm: '>=8.1.0'}
+    peerDependencies:
+      typescript: 5.x
+      zod: 3.x
+
+  zod@3.24.2:
+    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
+
 snapshots:
 
   '@mongodb-js/saslprep@1.2.2':
@@ -1152,6 +1175,12 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
+
+  env-util@git+https://git@github.com:FragnaroK/env.git#3d2b373711e7f5e1fd6616bc485a7fab80cfd166:
+    dependencies:
+      typescript: 5.8.3
+      zod: 3.24.2
+      zod-empty: 1.4.1(typescript@5.8.3)(zod@3.24.2)
 
   es-abstract@1.23.9:
     dependencies:
@@ -1472,6 +1501,8 @@ snapshots:
   isarray@2.0.5: {}
 
   joycon@3.1.1: {}
+
+  just-clone@6.2.0: {}
 
   kareem@2.6.3: {}
 
@@ -1955,3 +1986,11 @@ snapshots:
   wrappy@1.0.2: {}
 
   ws@8.17.1: {}
+
+  zod-empty@1.4.1(typescript@5.8.3)(zod@3.24.2):
+    dependencies:
+      just-clone: 6.2.0
+      typescript: 5.8.3
+      zod: 3.24.2
+
+  zod@3.24.2: {}

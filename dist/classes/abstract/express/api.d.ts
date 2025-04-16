@@ -5,6 +5,7 @@ import cors from "cors";
 import { MiddlewareFunction } from "../../../types/express/middleware.js";
 import AppError from "../../error.js";
 import { Log } from "../../../lib/logger.js";
+import Base from "../common/base.js";
 export type ApiHandler = "notFound" | "error";
 export type ApiDefaultEndpoints = "health" | "ping";
 export type ApiHandlersRecord = Partial<Record<ApiHandler, MiddlewareFunction>>;
@@ -22,7 +23,7 @@ export type ApiOptions = {
     trustProxyValue?: any;
     autoStart?: boolean;
 } & ApiEnvironment;
-export default abstract class Api {
+export default abstract class Api extends Base {
     protected readonly app: Express;
     protected readonly routes: Record<string, Router>;
     protected readonly middlewares: RequestHandler[];

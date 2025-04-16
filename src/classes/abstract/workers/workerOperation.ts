@@ -1,11 +1,11 @@
 import { ServiceWorkerBasePayload } from '@Type/express/workers.js';
 import AppError from '@Class/error.js';
-import WorkerBase from '@Class/abstract/workers/base.js';
+import Base from '@Class/abstract/common/base.js';
 import path from 'path';
 import createLogger, { Log } from '@/lib/logger.js';
 
 // Base class for worker operation files located in the backend/src/workers directory
-export default abstract class WorkerOperation<Data = unknown, Operation = string> extends WorkerBase {
+export default abstract class WorkerOperation<Data = unknown, Operation = string> extends Base {
     protected logger: Log;
 
     constructor(

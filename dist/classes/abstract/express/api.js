@@ -16,10 +16,12 @@ import HttpStatus from "http-status-values";
 import { pinoHttp } from "pino-http";
 import health from "../../../routes/health.route.js";
 import ping from "../../../routes/ping.route.js";
+import Base from "../common/base.js";
 const apiHandlers = ["notFound", "error"];
-export default class Api {
+export default class Api extends Base {
     constructor(app, routes, middlewares = [], handlers = {}, config, logger) {
         var _a;
+        super();
         this.app = app;
         this.routes = routes;
         this.middlewares = middlewares;

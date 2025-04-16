@@ -9,13 +9,7 @@ import HttpStatus from "http-status-values";
 import { pinoHttp } from "pino-http";
 import health from "@/routes/health.route.js";
 import ping from "@/routes/ping.route.js";
-
-// TODO: All express related code in this package should be moved to a separate package
-/* 
-note: The complexity of the code makes it no longer suitable as a simple utility.
-
-This could be converted to a template or very bare-bones framework for building APIs.
-*/
+import Base from "../common/base.js";
 
 // This array ensures that the handlers are loaded in the correct order
 const apiHandlers: Readonly<ApiHandler[]> = ["notFound", "error"] as const;
@@ -39,7 +33,7 @@ export type ApiOptions = {
 	autoStart?: boolean;
 } & ApiEnvironment;
 
-export default abstract class Api {
+export default abstract class Api extends Base {
 	private readonly registeredHandlers: ApiHandler[] = [];
 	protected readonly logger: Log;
 	protected server: http.Server | undefined;
@@ -64,6 +58,7 @@ export default abstract class Api {
 		protected readonly config?: ApiOptions,
 		logger?: Log,
 	) {
+		super();
 		this.logger = logger ?? createLogger("internal", "I-API", config?.DEBUG);
 		this.basePath = config?.basePath ?? "/api/v1";
 		this.env = config as ApiEnvironment;

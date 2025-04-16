@@ -1,4 +1,4 @@
-export default abstract class WorkerBase {
+export default abstract class Base {
     protected static get isTest(): boolean;
     protected static get isProd(): boolean;
     protected static get isDev(): boolean;

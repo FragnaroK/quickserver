@@ -1,8 +1,8 @@
 import AppError from '../../error.js';
-import WorkerBase from '../../abstract/workers/base.js';
+import Base from '../../abstract/common/base.js';
 import path from 'path';
 import createLogger from '../../../lib/logger.js';
-export default class WorkerOperation extends WorkerBase {
+export default class WorkerOperation extends Base {
     constructor(name, data, port) {
         super();
         this.data = data;

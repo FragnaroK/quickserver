@@ -3,10 +3,10 @@ import AppError from "@Class/error.js";
 import path from "path";
 import { ServiceWorkerBasePayload } from "@Type/express/workers.js";
 import { rootPath } from "get-root-path";
-import WorkerBase from "@Class/abstract/workers/base.js";
+import Base from "@/classes/abstract/common/base.js";
 import { Log } from "@/lib/logger.js";
 
-export default abstract class WorkerService extends WorkerBase {
+export default abstract class WorkerService extends Base {
 	protected static logger: Log;
 
 	protected static createRunner<D = unknown, O = string>(workerName: string) {
