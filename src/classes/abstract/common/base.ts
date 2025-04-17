@@ -15,11 +15,11 @@ export default abstract class Base {
 	}
 
 	protected static get isDebug(): boolean {
-		return env.get<boolean>("DEBUG", z.boolean(), { fallback: false });
+		return env.get<boolean>("DEBUG", z.coerce.boolean(), { fallback: false });
 	}
 
 	protected static get isLogging(): boolean {
-		return env.get<boolean>("LOGGING", z.boolean(), { fallback: false });
+		return env.get<boolean>("LOGGING", z.coerce.boolean(), { fallback: false });
 	}
 
 	protected get isTest(): boolean {
@@ -35,10 +35,10 @@ export default abstract class Base {
 	}
 
 	protected get isDebug(): boolean {
-		return env.get<boolean>("DEBUG", z.boolean(), { fallback: false });
+		return env.get<boolean>("DEBUG", z.coerce.boolean(), { fallback: false });
 	}
 
 	protected get isLogging(): boolean {
-		return env.get<boolean>("LOGGING", z.boolean(), { fallback: false });
+		return env.get<boolean>("LOGGING", z.coerce.boolean(), { fallback: false });
 	}
 }

@@ -11,10 +11,10 @@ export default class Base {
         return env.get("NODE_ENV", z.string(), { fallback: "" }) === "development";
     }
     static get isDebug() {
-        return env.get("DEBUG", z.boolean(), { fallback: false });
+        return env.get("DEBUG", z.coerce.boolean(), { fallback: false });
     }
     static get isLogging() {
-        return env.get("LOGGING", z.boolean(), { fallback: false });
+        return env.get("LOGGING", z.coerce.boolean(), { fallback: false });
     }
     get isTest() {
         return env.get("NODE_ENV", z.string(), { fallback: "" }) === "test";
@@ -26,9 +26,9 @@ export default class Base {
         return env.get("NODE_ENV", z.string(), { fallback: "" }) === "development";
     }
     get isDebug() {
-        return env.get("DEBUG", z.boolean(), { fallback: false });
+        return env.get("DEBUG", z.coerce.boolean(), { fallback: false });
     }
     get isLogging() {
-        return env.get("LOGGING", z.boolean(), { fallback: false });
+        return env.get("LOGGING", z.coerce.boolean(), { fallback: false });
     }
 }
