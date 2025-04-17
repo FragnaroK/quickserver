@@ -26,7 +26,7 @@ export * from "./lib/index.js";
 export * from "./db/index.js";
 export * from "./types/index.js";
 
-export { Class, Utils, Database, QuickServerRouter };
+export { Class, Utils, Database, QuickServerRouter }; 
 
 export default class QuickServer extends Class.Base.Api {
 	public readonly state = {
