@@ -52,6 +52,6 @@ export default abstract class Base {
 		return env.get<boolean>("LOGGING", z.coerce.boolean(), { fallback: false });
 	}
 
-	protected static readonly Logger: Log = createLogger('internal', this.getDerivedClassName(), this.isDebug);
-	protected readonly Logger: Log = createLogger('internal', this.getDerivedClassName(), this.isDebug);
+	public static readonly Logger: Log = createLogger('internal', this.getDerivedClassName(), this.isDebug);
+	public readonly Logger: Log = createLogger('internal', this.getDerivedClassName(), this.isDebug);
 }

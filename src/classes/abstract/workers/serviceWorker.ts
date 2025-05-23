@@ -5,6 +5,7 @@ import { ServiceWorkerBasePayload } from "@Type/express/workers.js";
 import { rootPath } from "get-root-path";
 import Base from "@/classes/abstract/common/base.js";
 
+
 export default abstract class WorkerService extends Base {
 	protected static createRunner<D = unknown, O = string>(
 		workerName: string,

@@ -12,6 +12,6 @@ export default abstract class Base {
     protected get isDev(): boolean;
     protected get isDebug(): boolean;
     protected get isLogging(): boolean;
-    protected static readonly Logger: Log;
-    protected readonly Logger: Log;
+    static readonly Logger: Log;
+    readonly Logger: Log;
 }
