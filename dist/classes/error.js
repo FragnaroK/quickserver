@@ -1,6 +1,6 @@
-import { isLog } from "../lib/logger.js";
+import { isLog } from "@/lib/logger.js";
 import HttpStatus from "http-status-values";
-export default class AppError extends Error {
+class AppError extends Error {
     constructor(code = "APP_ERROR", status = "INTERNAL_SERVER_ERROR", message = "Something went wrong", options = {}) {
         var _a, _b, _c;
         const prevError = AppError.carryPrevError(options === null || options === void 0 ? void 0 : options.data);
@@ -50,3 +50,4 @@ export default class AppError extends Error {
     }
 }
 AppError.errorCodeRegExp = /\[\w+_?\w*\]\s/g;
+export default AppError;

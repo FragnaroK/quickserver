@@ -8,9 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var _a;
-export default class PingController {
+class PingController {
 }
 _a = PingController;
 PingController.pong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.ok({ status: "pong" });
 });
+export default PingController;

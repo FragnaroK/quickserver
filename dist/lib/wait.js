@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const wait = (time = 1000) => __awaiter(void 0, void 0, void 0, function* () {
+const wait = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (time = 1000) {
     return yield new Promise((resolve) => {
         console.log(`Sleeping ${time}ms...`);
         setTimeout(resolve, time);

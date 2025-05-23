@@ -1,6 +1,11 @@
+var _a;
+import createLogger from "@/lib/logger.js";
 import env from "env-util";
 import { z } from "zod";
-export default class Base {
+class Base {
+    static getDerivedClassName() {
+        return this.name;
+    }
     static get isTest() {
         return env.get("NODE_ENV", z.string(), { fallback: "" }) === "test";
     }
@@ -32,3 +37,6 @@ export default class Base {
         return env.get("LOGGING", z.coerce.boolean(), { fallback: false });
     }
 }
+_a = Base;
+Base.Logger = createLogger('internal', _a.getDerivedClassName(), _a.isDebug);
+export default Base;

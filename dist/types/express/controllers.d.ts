@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Namespace } from "socket.io";
-import { ILimiterConfig } from "../express/config.js";
-import { Log } from "../../lib/logger.js";
+import { ILimiterConfig } from "@Type/express/config.js";
+import { Log } from "@/lib/logger.js";
 export interface ControllerWrapperValue extends Partial<ILimiterConfig> {
     socket?: Namespace;
     logger?: Log;

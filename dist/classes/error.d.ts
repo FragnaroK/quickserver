@@ -1,5 +1,5 @@
-import { IStatusCode } from "../types/common.js";
-import { Log } from "../lib/logger.js";
+import { IStatusCode } from "@Type/common.js";
+import { Log } from "@/lib/logger.js";
 interface IError2carry {
     code: IErrorCode;
     type: IErrorType;

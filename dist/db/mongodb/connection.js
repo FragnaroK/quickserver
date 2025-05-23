@@ -49,8 +49,8 @@ export default class MongoConnection {
         mongoose.connection.close().catch(onClosed);
     }
     connect(onConnectedCallback) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             (_a = this.logger) === null || _a === void 0 ? void 0 : _a.i('Connecting to MongoDB');
             if (onConnectedCallback) {
                 this.onConnectedCallback = onConnectedCallback;

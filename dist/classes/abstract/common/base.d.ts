@@ -1,4 +1,5 @@
 export default abstract class Base {
+    protected static getDerivedClassName(): string;
     protected static get isTest(): boolean;
     protected static get isProd(): boolean;
     protected static get isDev(): boolean;
@@ -9,4 +10,5 @@ export default abstract class Base {
     protected get isDev(): boolean;
     protected get isDebug(): boolean;
     protected get isLogging(): boolean;
+    protected static Logger: import("@/lib/logger.js").Log;
 }
