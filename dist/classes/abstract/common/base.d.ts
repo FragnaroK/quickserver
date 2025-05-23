@@ -1,5 +1,5 @@
 import { Log } from "@/lib/logger.js";
-export default abstract class Base {
+export default class Base {
     protected static getDerivedClassName(): string;
     protected getDerivedClassName(): string;
     protected static get isTest(): boolean;
