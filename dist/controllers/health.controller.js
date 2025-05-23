@@ -8,10 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var _a;
-class HealthController {
+export default class HealthController {
 }
 _a = HealthController;
 HealthController.getHealth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.ok({ status: "ok" });
 });
-export default HealthController;

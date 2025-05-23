@@ -1,5 +1,5 @@
-import { ServiceWorkerBasePayload } from '@Type/express/workers.js';
-import Base from '@Class/abstract/common/base.js';
+import { ServiceWorkerBasePayload } from '../../../types/express/workers.js';
+import Base from '../../abstract/common/base.js';
 export default abstract class WorkerOperation<Payload = unknown, Operation = string> extends Base {
     private readonly data;
     private readonly port;

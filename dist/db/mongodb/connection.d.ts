@@ -1,4 +1,4 @@
-import { Log } from '@/lib/logger.js';
+import { Log } from '../../lib/logger.js';
 export default class MongoConnection {
     private readonly logger?;
     private readonly mongoUrl;

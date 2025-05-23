@@ -1,5 +1,5 @@
 import HttpStatus from "http-status-values";
-import AppError from "@/classes/error.js";
+import AppError from "../classes/error.js";
 export default function responseHelpers(logger) {
     const extendedResponse = (req, resp, next) => {
         function response_ok(dataOrStatus, messageOrData, statusOrMessage) {

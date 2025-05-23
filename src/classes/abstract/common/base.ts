@@ -2,7 +2,7 @@ import createLogger, { Log } from "@/lib/logger.js";
 import env from "env-util";
 import { z } from "zod";
 
-export default class Base { 
+export default abstract class Base { 
 
 	protected static getDerivedClassName() {
 		return this.name;

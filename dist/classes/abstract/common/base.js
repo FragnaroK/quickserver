@@ -1,8 +1,8 @@
 var _a;
-import createLogger from "@/lib/logger.js";
+import createLogger from "../../../lib/logger.js";
 import env from "env-util";
 import { z } from "zod";
-class Base {
+export default class Base {
     constructor() {
         this.Logger = createLogger('internal', this.getDerivedClassName(), this.isDebug);
     }
@@ -45,4 +45,3 @@ class Base {
 }
 _a = Base;
 Base.Logger = createLogger('internal', _a.getDerivedClassName(), _a.isDebug);
-export default Base;

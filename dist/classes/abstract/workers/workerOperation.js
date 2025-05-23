@@ -1,5 +1,5 @@
-import AppError from '@Class/error.js';
-import Base from '@Class/abstract/common/base.js';
+import AppError from '../../error.js';
+import Base from '../../abstract/common/base.js';
 export default class WorkerOperation extends Base {
     constructor(data, port) {
         super();
