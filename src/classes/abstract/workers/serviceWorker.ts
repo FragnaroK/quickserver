@@ -4,45 +4,41 @@ import path from "path";
 import { ServiceWorkerBasePayload } from "@Type/express/workers.js";
 import { rootPath } from "get-root-path";
 import Base from "@/classes/abstract/common/base.js";
-import { Log } from "@/lib/logger.js";
 
 export default abstract class WorkerService extends Base {
-	protected static logger: Log;
-
-	protected static createRunner<D = unknown, O = string>(workerName: string) {
+	protected static createRunner<D = unknown, O = string>(
+		workerName: string,
+		buildFolder: string = "build",
+		workerNameExtension: string = ".worker.js",
+	) {
 		return {
-			run: <ReturnData = D>(
-				payload: ServiceWorkerBasePayload<D, O>,
-			): Promise<ReturnData> => {
+			run: <ReturnData = D>(payload: ServiceWorkerBasePayload<D, O>): Promise<ReturnData> => {
 				return new Promise((resolve, reject) => {
-					// Path needs to be the build output folder
-
-					this.logger.d(payload, "Running worker with payload");
+					this.Logger.d(payload, "Running worker with payload");
 					const worker = new Worker(
 						path.join(
 							rootPath,
-							"build/src/workers",
-							`${workerName}.worker.js`,
+							`${buildFolder}`,
+							"src",
+							"workers",
+							`${workerName}${workerNameExtension}`,
 						),
 						{
 							workerData: payload,
 						},
 					);
 
-					worker.on(
-						"message",
-						(response: ServiceWorkerBasePayload<ReturnData, O>) => {
-							this.logger.d(response, "Worker response");
-							if (response.status === "success") {
-								resolve(response.payload);
-							} else {
-								reject(response.error);
-							}
-						},
-					);
+					worker.on("message", (response: ServiceWorkerBasePayload<ReturnData, O>) => {
+						this.Logger.d(response, "Worker response");
+						if (response.status === "success") {
+							resolve(response.payload);
+						} else {
+							reject(response.error);
+						}
+					});
 
 					worker.on("error", (err) => {
-						this.logger.e(err, "Worker error");
+						this.Logger.e(err, "Worker error");
 						reject(
 							new AppError(
 								"APP_ERROR",
@@ -54,7 +50,7 @@ export default abstract class WorkerService extends Base {
 
 					worker.on("exit", (code) => {
 						if (code !== 0) {
-							this.logger.e(code, "Worker exited with code");
+							this.Logger.e(code, "Worker exited with code");
 							reject(
 								new AppError(
 									"APP_ERROR",

@@ -15,24 +15,24 @@
 	"license": "ISC",
 	"packageManager": "pnpm@10.8.1",
 	"dependencies": {
-		"@types/cors": "^2.8.17",
-		"@types/express": "^5.0.1",
+		"@types/cors": "^2.8.18",
+		"@types/express": "^5.0.2",
+		"env-util": "git+https://github.com/FragnaroK/env",
 		"get-root-path": "^3.0.1",
 		"helmet": "^8.1.0",
 		"http-status-values": "^1.0.8",
 		"lodash": "^4.17.21",
-		"mongoose": "^8.13.2",
-		"pino": "^9.6.0",
+		"mongoose": "^8.15.0",
+		"pino": "^9.7.0",
 		"pino-http": "^10.4.0",
 		"pino-pretty": "^13.0.0",
 		"socket.io": "^4.8.1",
 		"typescript": "^5.8.3",
-		"env-util": "github:FragnaroK/env#main",
-		"zod": "^3.24.2"
+		"zod": "^3.25.23"
 	},
 	"devDependencies": {
-		"@types/lodash": "^4.17.16",
-		"@types/node": "^22.14.0",
-		"tsc-alias": "^1.8.15"
+		"@types/lodash": "^4.17.17",
+		"@types/node": "^22.15.21",
+		"tsc-alias": "^1.8.16"
 	}
 }

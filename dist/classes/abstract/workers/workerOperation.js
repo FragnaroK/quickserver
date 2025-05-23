@@ -1,14 +1,10 @@
 import AppError from '@Class/error.js';
 import Base from '@Class/abstract/common/base.js';
-import path from 'path';
-import createLogger from '@/lib/logger.js';
 export default class WorkerOperation extends Base {
-    constructor(name, data, port) {
+    constructor(data, port) {
         super();
         this.data = data;
         this.port = port;
-        const cleanFilename = path.basename(name).replace('.worker.js', '').toLocaleUpperCase();
-        this.logger = createLogger('internal', `WORKER::${cleanFilename}::${data.operation}`, this.isDebug);
     }
     get payload() {
         return this.data.payload;
@@ -28,7 +24,7 @@ export default class WorkerOperation extends Base {
             status: 'error',
             error: new AppError('APP_ERROR', 'INTERNAL_SERVER_ERROR', error.message, {
                 data: error,
-                logger: this.logger,
+                logger: this.Logger,
             }),
         });
     }

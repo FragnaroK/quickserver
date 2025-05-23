@@ -1,24 +1,17 @@
 import { ServiceWorkerBasePayload } from '@Type/express/workers.js';
 import AppError from '@Class/error.js';
 import Base from '@Class/abstract/common/base.js';
-import path from 'path';
-import createLogger, { Log } from '@/lib/logger.js';
 
-// Base class for worker operation files located in the backend/src/workers directory
-export default abstract class WorkerOperation<Data = unknown, Operation = string> extends Base {
-    protected logger: Log;
+export default abstract class WorkerOperation<Payload = unknown, Operation = string> extends Base {
 
     constructor(
-        name: string,
-        private readonly data: ServiceWorkerBasePayload<Data, Operation>,
+        private readonly data: ServiceWorkerBasePayload<Payload, Operation>,
         private readonly port: MessagePort | null,
     ) {
         super();
-        const cleanFilename = path.basename(name).replace('.worker.js', '').toLocaleUpperCase();
-        this.logger = createLogger('internal', `WORKER::${cleanFilename}::${data.operation}`, this.isDebug);
     }
 
-    protected get payload(): Data {
+    protected get payload(): Payload {
         return this.data.payload;
     }
 
@@ -26,7 +19,7 @@ export default abstract class WorkerOperation<Data = unknown, Operation = string
         return this.data.operation;
     }
 
-    protected send<Return = Data>(payload: ServiceWorkerBasePayload<Return, Operation>) {
+    protected send<Return = Payload>(payload: ServiceWorkerBasePayload<Return, Operation>) {
         if (!this.port) throw new Error('Port is not available');
 
         this.port.postMessage(payload);
@@ -39,7 +32,7 @@ export default abstract class WorkerOperation<Data = unknown, Operation = string
             status: 'error',
             error: new AppError('APP_ERROR', 'INTERNAL_SERVER_ERROR', error.message, {
                 data: error,
-                logger: this.logger,
+                logger: this.Logger,
             }),
         });
     }

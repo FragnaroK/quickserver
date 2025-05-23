@@ -1,4 +1,3 @@
-/// <reference types="node" resolution-mode="require"/>
 import { Express, Router, RequestHandler } from "express";
 import * as http from "http";
 import cors from "cors";
