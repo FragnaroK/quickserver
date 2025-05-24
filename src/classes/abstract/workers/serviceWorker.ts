@@ -5,29 +5,17 @@ import { ServiceWorkerBasePayload } from "@Type/express/workers.js";
 import { rootPath } from "get-root-path";
 import Base from "@/classes/abstract/common/base.js";
 
-
 export default class WorkerService extends Base {
 	protected static createRunner<D = unknown, O = string>(
-		workerName: string,
-		buildFolder: string = "build",
-		workerNameExtension: string = ".worker.js",
+		workerPath: string,
 	) {
 		return {
 			run: <ReturnData = D>(payload: ServiceWorkerBasePayload<D, O>): Promise<ReturnData> => {
 				return new Promise((resolve, reject) => {
 					this.Logger.d(payload, "Running worker with payload");
-					const worker = new Worker(
-						path.join(
-							rootPath,
-							`${buildFolder}`,
-							"src",
-							"workers",
-							`${workerName}${workerNameExtension}`,
-						),
-						{
-							workerData: payload,
-						},
-					);
+					const worker = new Worker(path.join(rootPath, workerPath), {
+						workerData: payload,
+					});
 
 					worker.on("message", (response: ServiceWorkerBasePayload<ReturnData, O>) => {
 						this.Logger.d(response, "Worker response");
