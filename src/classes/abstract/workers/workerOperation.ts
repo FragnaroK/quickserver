@@ -1,8 +1,8 @@
-import { ServiceWorkerBasePayload } from '@Type/express/workers.js';
+import { ServiceWorkerBaseEventHandler, ServiceWorkerBasePayload } from '@Type/express/workers.js';
 import AppError from '@Class/error.js';
 import Base from '@Class/abstract/common/base.js';
 
-export default abstract class WorkerOperation<Payload = unknown, Operation = string> extends Base {
+export default abstract class WorkerOperation<Payload = unknown, Operation = string, Events = string> extends Base {
 
     constructor(
         private readonly data: ServiceWorkerBasePayload<Payload, Operation>,
@@ -19,7 +19,7 @@ export default abstract class WorkerOperation<Payload = unknown, Operation = str
         return this.data.operation;
     }
 
-    protected send<Return = Payload>(payload: ServiceWorkerBasePayload<Return, Operation>) {
+    protected send<Return = Payload>(payload: ServiceWorkerBasePayload<Return, Operation, Events>): void {
         if (!this.port) throw new Error('Port is not available');
 
         this.port.postMessage(payload);

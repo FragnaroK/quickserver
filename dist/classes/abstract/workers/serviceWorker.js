@@ -6,7 +6,7 @@ import Base from "../../../classes/abstract/common/base.js";
 export default class WorkerService extends Base {
     static createRunner(workerPath) {
         return {
-            run: (payload) => {
+            run: (payload, events) => {
                 return new Promise((resolve, reject) => {
                     this.Logger.d(payload, "Running worker with payload");
                     const worker = new Worker(path.join(rootPath, workerPath), {
@@ -14,12 +14,11 @@ export default class WorkerService extends Base {
                     });
                     worker.on("message", (response) => {
                         this.Logger.d(response, "Worker response");
-                        if (response.status === "success") {
-                            resolve(response.payload);
+                        const event = !response.event ? null : response.event;
+                        if (Object.keys(events).length > 0 && event && event in events) {
+                            return events[event](response);
                         }
-                        else {
-                            reject(response.error);
-                        }
+                        return response.status === "success" ? resolve(response.payload) : reject(response.error);
                     });
                     worker.on("error", (err) => {
                         this.Logger.e(err, "Worker error");
