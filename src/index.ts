@@ -6,10 +6,11 @@ import AppError from "./classes/error.js";
 import responseHelpers from "./middlewares/response.js";
 import Utils from "./lib/index.js";
 import Database from "./db/index.js";
+import { Server } from "http";
 
 export type QuickServerRoutes = Record<string, QuickServerRouter>;
 export type QuickServerApp = express.Express;
-export type QuickServerEvents = "server_started" | "server_stopped" | "server_error" | "server_initialized";
+export type QuickServerEvents = "server_started" | "server_stopped" | "server_error" | "server_initialized" | "server_created";
 export type QuickServerRequest = express.Request;
 export type QuickServerResponse = express.Response;
 export type QuickServerNext = express.NextFunction;
@@ -46,6 +47,15 @@ export default class QuickServer extends Class.Base.Api {
 		this.state.stopped = false;
 		this.state.error = false;
 		this.emit("server_initialized");
+	}
+
+	onCreate(server: Server): void {
+		this.logger.info("Server created successfully");
+		this.server = server;
+		this.state.started = false;
+		this.state.stopped = false;
+		this.state.error = false;
+		this.emit("server_created");
 	}
 
 	onStart(): void {

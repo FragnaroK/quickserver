@@ -10,6 +10,8 @@ import { pinoHttp } from "pino-http";
 import health from "@/routes/health.route.js";
 import ping from "@/routes/ping.route.js";
 import Base from "../common/base.js";
+import { createServer } from "http";
+import { Server } from "http";
 
 // This array ensures that the handlers are loaded in the correct order
 const apiHandlers: Readonly<ApiHandler[]> = ["notFound", "error"] as const;
@@ -243,29 +245,25 @@ export default abstract class Api extends Base {
 		// Apply custom middlewares
 		this.setMiddlewares();
 
-		this.logger.debug("API initialized successfully");
+		// Set up routes
+		this.setRoutes();
+
+		// Set up handlers (404, errors, etc.)
+		this.setHandlers();
+
+		this.onInit();
 
 		// Start the server if not disabled
 		if (!this.config?.autoStart) return;
 		this.start()
-			.then(() => {
-				this.logger.info("API server started successfully");
-				this.onInit();
-
-				// Set up routes
-				this.setRoutes();
-
-				// Set up handlers (404, errors, etc.)
-				this.setHandlers();
-			})
-			.catch((err) => {
-				this.logger.error("Error starting API server", err);
-				this.onError(
-					new AppError("API_ERROR", "INTERNAL_SERVER_ERROR", "Error starting API server", {
-						data: err,
-					}),
-				);
-			});
+		.catch((err) => {
+			this.logger.error("Error starting API server", err);
+			this.onError(
+				new AppError("API_ERROR", "INTERNAL_SERVER_ERROR", "Error starting API server", {
+					data: err,
+				}),
+			);
+		});
 	}
 
 	/**
@@ -277,8 +275,12 @@ export default abstract class Api extends Base {
 			this.logger.warn("API server is already running");
 			return Promise.resolve();
 		}
+
+		const httpServer = createServer(this.app);
+		this.onCreate(httpServer);
+
 		return new Promise((resolve, reject) => {
-			this.server = this.app.listen(this.env.PORT, () => {
+			this.server = httpServer.listen(this.env.PORT, () => {
 				this.logger.info(`API server started on port ${this.env.PORT}`);
 				this.logger.debug(
 					`API server is available at http://localhost:${this.env.PORT}${this.basePath}`,
@@ -328,6 +330,11 @@ export default abstract class Api extends Base {
 	 * Called when the API server is initialized
 	 */
 	abstract onInit(): void;
+
+	/**
+	 * Called when the server is created
+	 */
+	abstract onCreate(server: Server): void;
 
 	/**
 	 * Called when the API server starts successfully
