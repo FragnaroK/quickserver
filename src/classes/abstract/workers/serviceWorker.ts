@@ -19,8 +19,8 @@ export default class WorkerService extends Base {
 			run: <ReturnData = Payload, EventData = Payload | ReturnData>(
 				payload: ServiceWorkerBasePayload<Payload, Operation, Events>,
 				events?: Partial<Record<ServiceWorkerBaseEvents<Events>, (data: string) => void>>,
-			): Promise<ReturnData> => {
-				return new Promise((resolve, reject) => {
+			): Promise<ReturnData> =>
+				new Promise((resolve, reject) => {
 					this.Logger.d(payload, "Running worker with payload");
 					const worker = new Worker(path.join(rootPath, workerPath), {
 						workerData: payload,
@@ -67,8 +67,7 @@ export default class WorkerService extends Base {
 							);
 						}
 					});
-				});
-			},
+				}),
 		};
 	}
 }
