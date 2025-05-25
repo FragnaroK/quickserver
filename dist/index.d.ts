@@ -1,4 +1,3 @@
-/// <reference types="node" resolution-mode="require"/>
 import { ApiHandlersRecord, ApiOptions } from "./classes/abstract/express/api.js";
 import Class from "./classes/index.js";
 import express, { Router as QuickServerRouter } from "express";
@@ -6,7 +5,6 @@ import { MiddlewareFunction } from "./types/express/middleware.js";
 import AppError from "./classes/error.js";
 import Utils from "./lib/index.js";
 import Database from "./db/index.js";
-import { Server } from "http";
 export type QuickServerRoutes = Record<string, QuickServerRouter>;
 export type QuickServerApp = express.Express;
 export type QuickServerEvents = "server_started" | "server_stopped" | "server_error" | "server_initialized" | "server_created";
@@ -33,7 +31,7 @@ export default class QuickServer extends Class.Base.Api {
     };
     constructor(config: QuickServerConfig);
     onInit(): void;
-    onCreate(server: Server): void;
+    onCreate(): void;
     onStart(): void;
     onStop(): void;
     onError(error: AppError): void;

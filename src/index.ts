@@ -49,9 +49,8 @@ export default class QuickServer extends Class.Base.Api {
 		this.emit("server_initialized");
 	}
 
-	onCreate(server: Server): void {
+	onCreate(): void {
 		this.logger.info("Server created successfully");
-		this.server = server;
 		this.state.started = false;
 		this.state.stopped = false;
 		this.state.error = false;

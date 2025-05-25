@@ -6,7 +6,6 @@ import { MiddlewareFunction } from "../../../types/express/middleware.js";
 import AppError from "../../error.js";
 import { Log } from "../../../lib/logger.js";
 import Base from "../common/base.js";
-import { Server } from "http";
 export type ApiHandler = "notFound" | "error";
 export type ApiDefaultEndpoints = "health" | "ping";
 export type ApiHandlersRecord = Partial<Record<ApiHandler, MiddlewareFunction>>;
@@ -47,7 +46,7 @@ export default abstract class Api extends Base {
     start(): Promise<void>;
     shutdown(): Promise<void>;
     abstract onInit(): void;
-    abstract onCreate(server: Server): void;
+    abstract onCreate(): void;
     abstract onStart(): void;
     abstract onStop(): void;
     abstract onError(error: AppError): void;

@@ -152,10 +152,16 @@ export default class Api extends Base {
                 this.logger.warn("API server is already running");
                 return Promise.resolve();
             }
-            const httpServer = createServer(this.app);
-            this.onCreate(httpServer);
+            this.server = createServer(this.app);
+            this.onCreate();
             return new Promise((resolve, reject) => {
-                this.server = httpServer.listen(this.env.PORT, () => {
+                if (!this.server) {
+                    const error = new AppError("API_ERROR", "INTERNAL_SERVER_ERROR", "Server instance is not created");
+                    this.logger.error("Error starting API server", error);
+                    this.onError(error);
+                    return reject(error);
+                }
+                this.server.listen(this.env.PORT, () => {
                     this.logger.info(`API server started on port ${this.env.PORT}`);
                     this.logger.debug(`API server is available at http://localhost:${this.env.PORT}${this.basePath}`);
                     this.logger.debug(`Debug mode is ${this.env.DEBUG ? "enabled" : "disabled"}`);
