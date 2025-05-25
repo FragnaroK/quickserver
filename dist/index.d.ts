@@ -7,7 +7,7 @@ import Utils from "./lib/index.js";
 import Database from "./db/index.js";
 export type QuickServerRoutes = Record<string, QuickServerRouter>;
 export type QuickServerApp = express.Express;
-export type QuickServerEvents = "server_started" | "server_stopped" | "server_error";
+export type QuickServerEvents = "server_started" | "server_stopped" | "server_error" | "server_initialized";
 export type QuickServerRequest = express.Request;
 export type QuickServerResponse = express.Response;
 export type QuickServerNext = express.NextFunction;
@@ -30,6 +30,7 @@ export default class QuickServer extends Class.Base.Api {
         error: boolean;
     };
     constructor(config: QuickServerConfig);
+    onInit(): void;
     onStart(): void;
     onStop(): void;
     onError(error: AppError): void;

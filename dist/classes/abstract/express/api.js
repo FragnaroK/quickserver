@@ -131,13 +131,16 @@ export default class Api extends Base {
         this.logger.debug(`Initializing API with environment: ${JSON.stringify(this.env, null, 2)}`);
         this.applyDefaultMiddlewares();
         this.setMiddlewares();
-        this.setRoutes();
-        this.setHandlers();
         this.logger.debug("API initialized successfully");
         if (!((_a = this.config) === null || _a === void 0 ? void 0 : _a.autoStart))
             return;
         this.start()
-            .then(() => this.logger.info("API server started successfully"))
+            .then(() => {
+            this.logger.info("API server started successfully");
+            this.onInit();
+            this.setRoutes();
+            this.setHandlers();
+        })
             .catch((err) => {
             this.logger.error("Error starting API server", err);
             this.onError(new AppError("API_ERROR", "INTERNAL_SERVER_ERROR", "Error starting API server", {

@@ -45,6 +45,7 @@ export default abstract class Api extends Base {
     private init;
     start(): Promise<void>;
     shutdown(): Promise<void>;
+    abstract onInit(): void;
     abstract onStart(): void;
     abstract onStop(): void;
     abstract onError(error: AppError): void;

@@ -9,7 +9,7 @@ import Database from "./db/index.js";
 
 export type QuickServerRoutes = Record<string, QuickServerRouter>;
 export type QuickServerApp = express.Express;
-export type QuickServerEvents = "server_started" | "server_stopped" | "server_error";
+export type QuickServerEvents = "server_started" | "server_stopped" | "server_error" | "server_initialized";
 export type QuickServerRequest = express.Request;
 export type QuickServerResponse = express.Response;
 export type QuickServerNext = express.NextFunction;
@@ -38,6 +38,14 @@ export default class QuickServer extends Class.Base.Api {
 	constructor(config: QuickServerConfig) {
 		const { app = express(), routes, middlewares = [], handlers, options } = config;
 		super(app, routes, [responseHelpers(), ...middlewares], handlers, options);
+	}
+
+	onInit(): void {
+		this.logger.info("Server initialized successfully");
+		this.state.started = false;
+		this.state.stopped = false;
+		this.state.error = false;
+		this.emit("server_initialized");
 	}
 
 	onStart(): void {

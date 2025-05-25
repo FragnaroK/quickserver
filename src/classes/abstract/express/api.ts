@@ -17,7 +17,7 @@ const apiHandlers: Readonly<ApiHandler[]> = ["notFound", "error"] as const;
 export type ApiHandler = "notFound" | "error";
 export type ApiDefaultEndpoints = "health" | "ping";
 
-export type ApiHandlersRecord = Partial<Record<ApiHandler, MiddlewareFunction>>
+export type ApiHandlersRecord = Partial<Record<ApiHandler, MiddlewareFunction>>;
 
 export type ApiEnvironment = {
 	DEBUG: boolean;
@@ -243,18 +243,21 @@ export default abstract class Api extends Base {
 		// Apply custom middlewares
 		this.setMiddlewares();
 
-		// Set up routes
-		this.setRoutes();
-
-		// Set up handlers (404, errors, etc.)
-		this.setHandlers();
-
 		this.logger.debug("API initialized successfully");
 
 		// Start the server if not disabled
 		if (!this.config?.autoStart) return;
 		this.start()
-			.then(() => this.logger.info("API server started successfully"))
+			.then(() => {
+				this.logger.info("API server started successfully");
+				this.onInit();
+
+				// Set up routes
+				this.setRoutes();
+
+				// Set up handlers (404, errors, etc.)
+				this.setHandlers();
+			})
 			.catch((err) => {
 				this.logger.error("Error starting API server", err);
 				this.onError(
@@ -320,6 +323,11 @@ export default abstract class Api extends Base {
 
 		this.onStop();
 	}
+
+	/**
+	 * Called when the API server is initialized
+	 */
+	abstract onInit(): void;
 
 	/**
 	 * Called when the API server starts successfully
