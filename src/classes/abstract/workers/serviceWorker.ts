@@ -1,19 +1,19 @@
 import { Worker } from "worker_threads";
 import AppError from "@Class/error.js";
 import path from "path";
-import { ServiceWorkerBaseEventHandler, ServiceWorkerBasePayload } from "@Type/express/workers.js";
+import { ServiceWorkerBaseEventHandler, ServiceWorkerBaseEvents, ServiceWorkerBasePayload } from "@Type/express/workers.js";
 import { rootPath } from "get-root-path";
 import Base from "@/classes/abstract/common/base.js";
 
 export default class WorkerService extends Base {
-	protected static createRunner<Payload = unknown, Operation = string, Events = string>(
+	protected static createRunner<Payload = unknown, Operation = string, Events extends string | number | symbol = string>(
 		workerPath: string,
 	) {
 		return {
-			run: <ReturnData = Payload>(
-				payload: ServiceWorkerBasePayload<Payload, Operation, Events>,
-				events?: ServiceWorkerBaseEventHandler<ReturnData, Operation, Events>,
-			): Promise<ReturnData> => {
+			run: <ReturnData = Payload, EventData = Payload | ReturnData>(
+            payload: ServiceWorkerBasePayload<Payload, Operation, Events>,
+            events?: Partial<Record<ServiceWorkerBaseEvents<Events>, (data: ServiceWorkerBasePayload<EventData, Operation, Events>) => void>>,
+        ): Promise<ReturnData> => {
 				return new Promise((resolve, reject) => {
 					this.Logger.d(payload, "Running worker with payload");
 					const worker = new Worker(path.join(rootPath, workerPath), {
@@ -33,7 +33,7 @@ export default class WorkerService extends Base {
 								  >);
 
 							if (events && Object.keys(events).length > 0 && event && event in events) {
-								return events[event](response as any);
+								return events[event]?.(response as any);
 							}
 
 							return response.status === "success"
