@@ -12,7 +12,7 @@ export default class WorkerService extends Base {
 		return {
 			run: <ReturnData = Payload>(
 				payload: ServiceWorkerBasePayload<Payload, Operation, Events>,
-				events?: ServiceWorkerBaseEventHandler<Payload, Operation, Events>,
+				events?: ServiceWorkerBaseEventHandler<ReturnData, Operation, Events>,
 			): Promise<ReturnData> => {
 				return new Promise((resolve, reject) => {
 					this.Logger.d(payload, "Running worker with payload");

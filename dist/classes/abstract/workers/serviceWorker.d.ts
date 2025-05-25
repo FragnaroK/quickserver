@@ -2,6 +2,6 @@ import { ServiceWorkerBaseEventHandler, ServiceWorkerBasePayload } from "../../.
 import Base from "../../../classes/abstract/common/base.js";
 export default class WorkerService extends Base {
     protected static createRunner<Payload = unknown, Operation = string, Events = string>(workerPath: string): {
-        run: <ReturnData = Payload>(payload: ServiceWorkerBasePayload<Payload, Operation, Events>, events?: ServiceWorkerBaseEventHandler<Payload, Operation, Events>) => Promise<ReturnData>;
+        run: <ReturnData = Payload>(payload: ServiceWorkerBasePayload<Payload, Operation, Events>, events?: ServiceWorkerBaseEventHandler<ReturnData, Operation, Events> | undefined) => Promise<ReturnData>;
     };
 }
