@@ -1,8 +1,9 @@
 import AppError from "../../classes/error.js";
 export type ServiceWorkerBaseStatus = 'success' | 'error';
 export type ServiceWorkerBaseEvents<Events = string> = 'start' | 'progress' | 'complete' | 'error' | 'cancelled' | 'status' | 'update' | 'message' | Events;
-export type ServiceWorkerBaseEventHandler<Data = unknown, Operations = string, Events = string> = {
-    [event in ServiceWorkerBaseEvents & Events]: <EventData = ServiceWorkerBasePayload<Data, Operations>>(payload: EventData) => void;
+export type ServiceWorkerBaseEventHandlerFunction<EventData = string> = (payload: EventData) => void;
+export type ServiceWorkerBaseEventHandler<Data = string, Operations = string, Events = string> = {
+    [event in ServiceWorkerBaseEvents & Events]: ServiceWorkerBaseEventHandlerFunction<ServiceWorkerBasePayload<Data, Operations>>;
 };
 export interface ServiceWorkerBasePayload<Data = unknown, Operations = string, Events = string> {
     operation: Operations;
