@@ -14,11 +14,15 @@ export default class WorkerService extends Base {
                     });
                     worker.on("message", (response) => {
                         this.Logger.d(response, "Worker response");
-                        const event = !response.event ? null : response.event;
-                        if (Object.keys(events).length > 0 && event && event in events) {
+                        const event = !response.event
+                            ? null
+                            : response.event;
+                        if (events && Object.keys(events).length > 0 && event && event in events) {
                             return events[event](response);
                         }
-                        return response.status === "success" ? resolve(response.payload) : reject(response.error);
+                        return response.status === "success"
+                            ? resolve(response.payload)
+                            : reject(response.error);
                     });
                     worker.on("error", (err) => {
                         this.Logger.e(err, "Worker error");

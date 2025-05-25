@@ -7,7 +7,7 @@ export type ServiceWorkerBaseEventHandler<Data = unknown, Operations = string, E
 export interface ServiceWorkerBasePayload<Data = unknown, Operations = string, Events = string> {
     operation: Operations;
     payload: Data;
-    status: ServiceWorkerBaseStatus;
+    status?: ServiceWorkerBaseStatus;
     error?: AppError;
     event?: ServiceWorkerBaseEvents<Events>;
 }
