@@ -20,16 +20,10 @@ export default class QuickServer extends Class.Base.Api {
     }
     onInit() {
         this.logger.info("Server initialized successfully");
-        this.state.started = false;
-        this.state.stopped = false;
-        this.state.error = false;
         this.emit("server_initialized");
     }
     onCreate() {
         this.logger.info("Server created successfully");
-        this.state.started = false;
-        this.state.stopped = false;
-        this.state.error = false;
         this.emit("server_created");
     }
     onStart() {
